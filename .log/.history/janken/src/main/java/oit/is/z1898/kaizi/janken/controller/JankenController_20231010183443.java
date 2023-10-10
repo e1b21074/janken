@@ -18,10 +18,10 @@ public class JankenController {
   @Autowired
   private Entry entry;
 
-  // @GetMapping("/janken")
-  // public String janken() {
-  //   return "janken.html";
-  // }
+  @GetMapping("/janken")
+  public String janken() {
+    return "janken.html";
+  }
 
   @PostMapping("/janken")
   public String janken(@RequestParam String name, ModelMap model) {
@@ -35,7 +35,7 @@ public class JankenController {
     this.entry.addUser(loginUser);
     model.addAttribute("entry", this.entry);
 
-    return "janken.html";
+    return "jankengame.html";
 
   }
 

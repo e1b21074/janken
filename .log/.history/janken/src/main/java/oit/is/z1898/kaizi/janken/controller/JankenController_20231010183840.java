@@ -35,7 +35,7 @@ public class JankenController {
     this.entry.addUser(loginUser);
     model.addAttribute("entry", this.entry);
 
-    return "janken.html";
+    return "jankengame.html";
 
   }
 
