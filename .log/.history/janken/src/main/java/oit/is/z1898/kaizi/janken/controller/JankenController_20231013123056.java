@@ -34,7 +34,7 @@ public class JankenController {
   public String jankengame(Principal prin, ModelMap model){
     this.loginUser = prin.getName();
     this.entry.addUser(loginUser);
-    model.addAttribute("loginUser", this.loginUser);
+    model.addAttribute("loginUser", loginUser);
     model.addAttribute("users", this.entry.getUsers());
     return "janken.html";
 
@@ -55,8 +55,8 @@ public class JankenController {
         Result = "You Win";
         break;
     }
-    model.addAttribute("loginUser", this.loginUser);
     model.addAttribute("users", this.entry.getUsers());
+    model.addAttribute("loginUsers", this.loginUser);
     model.addAttribute("Playerhand", Playerhand);
     model.addAttribute("Cpuhand", Cpuhand);
     model.addAttribute("Result", Result);
