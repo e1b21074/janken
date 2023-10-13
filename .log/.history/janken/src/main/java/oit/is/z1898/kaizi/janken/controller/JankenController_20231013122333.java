@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import oit.is.z1898.kaizi.janken.model.Entry;
@@ -16,8 +17,6 @@ public class JankenController {
 
   @Autowired
   private Entry entry;
-
-  private String loginUser;
 
   // @GetMapping("/janken")
   // public String janken() {
@@ -32,9 +31,9 @@ public class JankenController {
 
   @GetMapping("/janken")
   public String jankengame(Principal prin, ModelMap model){
-    this.loginUser = prin.getName();
+    String loginUser = prin.getName();
     this.entry.addUser(loginUser);
-    model.addAttribute("loginUser", this.loginUser);
+    model.addAttribute("loginUser", loginUser);
     model.addAttribute("users", this.entry.getUsers());
     return "janken.html";
 
@@ -55,8 +54,8 @@ public class JankenController {
         Result = "You Win";
         break;
     }
-    model.addAttribute("loginUser", this.loginUser);
     model.addAttribute("users", this.entry.getUsers());
+    model.addAttribute("loginUsers", this.entry.getNumUsers());
     model.addAttribute("Playerhand", Playerhand);
     model.addAttribute("Cpuhand", Cpuhand);
     model.addAttribute("Result", Result);

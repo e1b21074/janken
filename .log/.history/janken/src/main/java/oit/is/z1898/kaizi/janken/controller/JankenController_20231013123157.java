@@ -55,8 +55,8 @@ public class JankenController {
         Result = "You Win";
         break;
     }
-    model.addAttribute("loginUser", this.loginUser);
     model.addAttribute("users", this.entry.getUsers());
+    model.addAttribute("loginUsers", this.loginUser);
     model.addAttribute("Playerhand", Playerhand);
     model.addAttribute("Cpuhand", Cpuhand);
     model.addAttribute("Result", Result);

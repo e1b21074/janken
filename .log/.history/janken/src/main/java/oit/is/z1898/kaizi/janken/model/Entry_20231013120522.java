@@ -25,4 +25,7 @@ public class Entry {
         this.users = users;
     }
 
+    public int getNumUsers(){
+        return this.users.size();
+    }
 }
