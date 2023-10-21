@@ -17,6 +17,7 @@ import oit.is.z1898.kaizi.janken.model.MatchMapper;
 @Controller
 public class JankenController {
 
+  @Autowired
   private String loginUser;
 
   @Autowired

@@ -5,10 +5,15 @@ import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import oit.is.z1898.kaizi.janken.model.Entry;
 import oit.is.z1898.kaizi.janken.model.User;
 import oit.is.z1898.kaizi.janken.model.UserMapper;
 import oit.is.z1898.kaizi.janken.model.Match;
@@ -17,6 +22,7 @@ import oit.is.z1898.kaizi.janken.model.MatchMapper;
 @Controller
 public class JankenController {
 
+  @Autowired
   private String loginUser;
 
   @Autowired
@@ -35,14 +41,6 @@ public class JankenController {
     model.addAttribute("matches", matches);
     return "janken.html";
 
-  }
-
-  @GetMapping("/match")
-  public String match(@RequestParam int id, ModelMap model){
-    User user = usermapper.selectbyId(id);
-    model.addAttribute("loginUser", this.loginUser);
-    model.addAttribute("user", user);
-    return "match.html";
   }
 
   @GetMapping("/jankengame")
@@ -65,6 +63,14 @@ public class JankenController {
     model.addAttribute("Cpuhand", Cpuhand);
     model.addAttribute("Result", Result);
     return "janken.html";
+  }
+
+  @GetMapping("/match")
+  public String match(@RequestParam int id, ModelMap model){
+    User user = usermapper.selectbyId(id);
+    model.addAttribute("loginUser", this.loginUser);
+    model.addAttribute("user", user);
+    return "match.html";
   }
 
 }

@@ -11,11 +11,11 @@
     <h1>Match</h1>
     <h2>[[${loginUser}]] V.S. [[${user.name}]]</h2>
 
-    <div>
+    <form action="/match" method="post">
         <a href="/jankengame?Playerhand=gu">ぐー</a>
         <a href="/jankengame?Playerhand=choki">ちょき</a>
         <a href="/jankengame?Playerhand=pa">ぱー</a>
-    </div>
+    </form>
     <br>
     <div th:if="${Result}">
       <p>あなたの手:[[${Playerhand}]]</p>
