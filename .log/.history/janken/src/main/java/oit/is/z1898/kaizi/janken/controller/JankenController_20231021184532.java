@@ -50,18 +50,19 @@ public class JankenController {
   public String game(@RequestParam int id, @RequestParam String Player1, ModelMap model) {
     Match match = new Match();
     Janken janken = new Janken(Player1);
+    janken.game();
 
     match.setUser1(usermapper.selectByName(this.loginUser).getId());
     match.setUser2(id);
-    match.setUser1Hand(janken.getPlayer1());
-    match.setUser2Hand(janken.getPlayer2());
+    match.setUser1Hand(Player1);
+    match.setUser2Hand(janken.Player2());
     matchmapper.insertMatch(match);
 
     model.addAttribute("loginUser", this.loginUser);
     model.addAttribute("user", usermapper.selectbyId(id));
-    model.addAttribute("Player1", janken.getPlayer1());
-    model.addAttribute("Player2", janken.getPlayer2());
-    model.addAttribute("Result", janken.getResult());
+    model.addAttribute("Player1", janken.Player1());
+    model.addAttribute("Player2", janken.Player2());
+    model.addAttribute("Result", janken.Result());
     return "match.html";
   }
 

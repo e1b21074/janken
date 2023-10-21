@@ -1,23 +1,18 @@
 package oit.is.z1898.kaizi.janken.model;
 
-public class Janken {
-    private String Player1;
-    private String Player2 = "gu";
-    private String Result = "";
+import org.springframework.stereotype.Component;
 
-    public Janken (String Player1) {
+@Component
+public class Janken {
+    String Player1;
+    String Player2 = "gu";
+    String Result = "";
+
+    public void Janken (String Player1) {
         this.Player1 = Player1;
     }
 
-    public String getPlayer1(){
-        return this.Player1;
-    }
-
-    public String getPlayer2(){
-        return this.Player2;
-    }
-
-    public String getResult(){
+    public void game(){
         switch (this.Player1) {
             case "gu":
             this.Result = "Draw";
@@ -29,6 +24,5 @@ public class Janken {
             this.Result = "You Win";
             break;
         }
-        return this.Result;
     }
 }

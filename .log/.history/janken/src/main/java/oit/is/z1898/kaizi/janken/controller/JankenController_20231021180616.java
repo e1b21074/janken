@@ -13,12 +13,12 @@ import oit.is.z1898.kaizi.janken.model.User;
 import oit.is.z1898.kaizi.janken.model.UserMapper;
 import oit.is.z1898.kaizi.janken.model.Match;
 import oit.is.z1898.kaizi.janken.model.MatchMapper;
-import oit.is.z1898.kaizi.janken.model.Janken;
 
 @Controller
 public class JankenController {
 
   private String loginUser;
+  private User user;
 
   @Autowired
   private UserMapper usermapper;
@@ -40,28 +40,32 @@ public class JankenController {
 
   @GetMapping("/match")
   public String match(@RequestParam int id, ModelMap model){
-    User user = usermapper.selectbyId(id);
+    this.user = usermapper.selectbyId(id);
     model.addAttribute("loginUser", this.loginUser);
-    model.addAttribute("user", user);
+    model.addAttribute("user", this.user);
     return "match.html";
   }
 
-  @GetMapping("/fight")
-  public String game(@RequestParam int id, @RequestParam String Player1, ModelMap model) {
-    Match match = new Match();
-    Janken janken = new Janken(Player1);
-
-    match.setUser1(usermapper.selectByName(this.loginUser).getId());
-    match.setUser2(id);
-    match.setUser1Hand(janken.getPlayer1());
-    match.setUser2Hand(janken.getPlayer2());
-    matchmapper.insertMatch(match);
-
+  @GetMapping("/jankengame")
+  public String gu(@RequestParam String Player1, ModelMap model) {
+    String Result = "";
+    String Player2 = "gu";
+    switch (Player1) {
+      case "gu":
+        Result = "Draw";
+        break;
+      case "choki":
+        Result = "You Lose";
+        break;
+      case "pa":
+        Result = "You Win";
+        break;
+    }
     model.addAttribute("loginUser", this.loginUser);
-    model.addAttribute("user", usermapper.selectbyId(id));
-    model.addAttribute("Player1", janken.getPlayer1());
-    model.addAttribute("Player2", janken.getPlayer2());
-    model.addAttribute("Result", janken.getResult());
+    model.addAttribute("user", this.user);
+    model.addAttribute("Player1", Player1);
+    model.addAttribute("Player2", Player2);
+    model.addAttribute("Result", Result);
     return "match.html";
   }
 

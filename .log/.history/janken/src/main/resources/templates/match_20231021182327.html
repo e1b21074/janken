@@ -12,9 +12,9 @@
     <h2>[[${loginUser}]] V.S. [[${user.name}]]</h2>
 
     <div>
-        <a th:href="@{/fight(id=${user.id}, Player1='gu')}">ぐー</a>
-        <a th:href="@{/fight(id=${user.id}, Player1='choki')}">ちょき</a>
-        <a th:href="@{/fight(id=${user.id}, Player1='pa')}">ぱー</a>
+        <a href="/game?Player1=gu">ぐー</a>
+        <a href="/game?Player1=choki">ちょき</a>
+        <a href="/game?Player1=pa">ぱー</a>
     </div>
     <br>
     <div th:if="${Result}">
