@@ -1,8 +1,8 @@
 package oit.is.z1898.kaizi.janken.model;
 
 public class User {
-    private int id;
-    private String name;
+    int id;
+    String name;
 
     public String getName() {
         return name;

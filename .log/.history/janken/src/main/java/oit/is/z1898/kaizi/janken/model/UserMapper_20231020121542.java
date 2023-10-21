@@ -7,14 +7,16 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Select;
 
-@Mapper
-public interface MatchMapper {
+public class UserMapper {
 
-    @Select("SELECT * from matches")
-    ArrayList<Match> selectAllMatchs();
+    @Select("SELECT id,name from users where id = #{id}")
+    User selectById(int id);
 
-    @Insert("INSERT INTO matches (user1,user2,user1Hand,user2Hand) VALUES (#{user1},#{user2},#{user1Hand},#{user2Hand});")
+    @Insert("INSERT INTO users (name) VALUES (#{name});")
     @Options(useGeneratedKeys = true, keyColumn = "id", keyProperty = "id")
-    void insertMatch(User User);
+    void insertUser(User User);
+
+    @Select("SELECT * from users where name = #{name}")
+    ArrayList<User> selectAllByname(String name);
 
 }

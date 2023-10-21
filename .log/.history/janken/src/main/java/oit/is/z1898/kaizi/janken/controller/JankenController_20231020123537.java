@@ -23,14 +23,25 @@ public class JankenController {
   @Autowired
   private Entry entry;
   private String loginUser;
+  UserMapper UserMapper;
 
-  @Autowired
-  private UserMapper usermapper;
+  // @GetMapping("/janken")
+  // public String janken() {
+  //   return "janken.html";
+  // }
+
+  @PostMapping("/janken")
+  public String janken(@RequestParam String name, ModelMap model) {
+    model.addAttribute("name", name);
+    return "janken.html";
+  }
 
   @GetMapping("/janken")
   public String jankengame(Principal prin, ModelMap model){
-    ArrayList<User> users = usermapper.selectAllUsers();
-    model.addAttribute("users", users);
+    this.loginUser = prin.getName();
+    this.entry.addUser(loginUser);
+    model.addAttribute("loginUser", this.loginUser);
+    model.addAttribute("users", this.entry.getUsers());
     return "janken.html";
 
   }
