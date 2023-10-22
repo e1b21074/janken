@@ -50,6 +50,7 @@ public class JankenController {
   public String game(@RequestParam int id, @RequestParam String Player1, ModelMap model) {
     Match match = new Match();
     Janken janken = new Janken(Player1);
+    janken.game();
 
     match.setUser1(usermapper.selectByName(this.loginUser).getId());
     match.setUser2(id);

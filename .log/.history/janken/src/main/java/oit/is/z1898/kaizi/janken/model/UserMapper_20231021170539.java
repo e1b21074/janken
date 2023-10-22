@@ -9,7 +9,7 @@ import org.apache.ibatis.annotations.Select;
 public interface UserMapper {
 
     @Select("SELECT * from users where id = #{id}")
-    User selectbyId(int id);
+    User selectbyId(String id);
 
     @Select("SELECT * from users where name = #{name}")
     User selectByName(String name);

@@ -13,7 +13,7 @@ import oit.is.z1898.kaizi.janken.model.User;
 import oit.is.z1898.kaizi.janken.model.UserMapper;
 import oit.is.z1898.kaizi.janken.model.Match;
 import oit.is.z1898.kaizi.janken.model.MatchMapper;
-import oit.is.z1898.kaizi.janken.model.Janken;
+import oit.is.z1898.kaizi.janken.model.janken;
 
 @Controller
 public class JankenController {
@@ -46,22 +46,16 @@ public class JankenController {
     return "match.html";
   }
 
-  @GetMapping("/fight")
+  @GetMapping("/game")
   public String game(@RequestParam int id, @RequestParam String Player1, ModelMap model) {
-    Match match = new Match();
-    Janken janken = new Janken(Player1);
-
-    match.setUser1(usermapper.selectByName(this.loginUser).getId());
-    match.setUser2(id);
-    match.setUser1Hand(janken.getPlayer1());
-    match.setUser2Hand(janken.getPlayer2());
-    matchmapper.insertMatch(match);
-
+    User user = usermapper.selectbyId(id);
+    janken janken = new janken(Player1);
+    janken.game();
     model.addAttribute("loginUser", this.loginUser);
-    model.addAttribute("user", usermapper.selectbyId(id));
-    model.addAttribute("Player1", janken.getPlayer1());
-    model.addAttribute("Player2", janken.getPlayer2());
-    model.addAttribute("Result", janken.getResult());
+    model.addAttribute("user", user);
+    model.addAttribute("Player1", janken.Player1);
+    model.addAttribute("Player2", janken.Player2);
+    model.addAttribute("Result", janken.Result);
     return "match.html";
   }
 

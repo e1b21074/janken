@@ -5,19 +5,24 @@ import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import oit.is.z1898.kaizi.janken.model.Entry;
 import oit.is.z1898.kaizi.janken.model.User;
 import oit.is.z1898.kaizi.janken.model.UserMapper;
 import oit.is.z1898.kaizi.janken.model.Match;
 import oit.is.z1898.kaizi.janken.model.MatchMapper;
-import oit.is.z1898.kaizi.janken.model.Janken;
 
 @Controller
 public class JankenController {
 
+  @Autowired
   private String loginUser;
 
   @Autowired
@@ -38,30 +43,33 @@ public class JankenController {
 
   }
 
+  @GetMapping("/jankengame")
+  public String gu(@RequestParam String Playerhand, ModelMap model) {
+    String Result = "";
+    String Cpuhand = "gu";
+    switch (Playerhand) {
+      case "gu":
+        Result = "Draw";
+        break;
+      case "choki":
+        Result = "You Lose";
+        break;
+      case "pa":
+        Result = "You Win";
+        break;
+    }
+    model.addAttribute("loginUser", this.loginUser);
+    model.addAttribute("Playerhand", Playerhand);
+    model.addAttribute("Cpuhand", Cpuhand);
+    model.addAttribute("Result", Result);
+    return "janken.html";
+  }
+
   @GetMapping("/match")
   public String match(@RequestParam int id, ModelMap model){
     User user = usermapper.selectbyId(id);
     model.addAttribute("loginUser", this.loginUser);
     model.addAttribute("user", user);
-    return "match.html";
-  }
-
-  @GetMapping("/fight")
-  public String game(@RequestParam int id, @RequestParam String Player1, ModelMap model) {
-    Match match = new Match();
-    Janken janken = new Janken(Player1);
-
-    match.setUser1(usermapper.selectByName(this.loginUser).getId());
-    match.setUser2(id);
-    match.setUser1Hand(janken.getPlayer1());
-    match.setUser2Hand(janken.getPlayer2());
-    matchmapper.insertMatch(match);
-
-    model.addAttribute("loginUser", this.loginUser);
-    model.addAttribute("user", usermapper.selectbyId(id));
-    model.addAttribute("Player1", janken.getPlayer1());
-    model.addAttribute("Player2", janken.getPlayer2());
-    model.addAttribute("Result", janken.getResult());
     return "match.html";
   }
 
