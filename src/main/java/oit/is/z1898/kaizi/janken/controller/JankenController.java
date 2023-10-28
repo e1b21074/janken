@@ -30,9 +30,11 @@ public class JankenController {
   public String jankengame(Principal prin, ModelMap model){
     ArrayList<User> users = usermapper.selectAllUsers();
     ArrayList<Match> matches = matchmapper.selectByMatches();
+    ArrayList<MatchInfo> matchinfos = matchinfomapper.selectActiveMatchinfo();
     this.loginUser = prin.getName();
     model.addAttribute("loginUser", this.loginUser);
     model.addAttribute("users", users);
+    model.addAttribute("matchinfos", matchinfos);
     model.addAttribute("matches", matches);
     return "janken.html";
 
