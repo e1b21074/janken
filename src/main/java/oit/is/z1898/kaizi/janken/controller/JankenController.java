@@ -9,11 +9,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import oit.is.z1898.kaizi.janken.model.User;
-import oit.is.z1898.kaizi.janken.model.UserMapper;
-import oit.is.z1898.kaizi.janken.model.Match;
-import oit.is.z1898.kaizi.janken.model.MatchMapper;
-import oit.is.z1898.kaizi.janken.model.Janken;
+import oit.is.z1898.kaizi.janken.model.*;
+
 
 @Controller
 public class JankenController {
@@ -25,6 +22,9 @@ public class JankenController {
 
   @Autowired
   private MatchMapper matchmapper;
+
+  @Autowired
+  private MatchInfoMapper matchinfomapper;
 
   @GetMapping("/janken")
   public String jankengame(Principal prin, ModelMap model){
@@ -48,21 +48,21 @@ public class JankenController {
 
   @GetMapping("/fight")
   public String game(@RequestParam int id, @RequestParam String Player1, ModelMap model) {
-    Match match = new Match();
+    MatchInfo matchinfo = new MatchInfo();
     Janken janken = new Janken(Player1);
 
-    match.setUser1(usermapper.selectByName(this.loginUser).getId());
-    match.setUser2(id);
-    match.setUser1Hand(janken.getPlayer1());
-    match.setUser2Hand(janken.getPlayer2());
-    matchmapper.insertMatch(match);
+    matchinfo.setUser1(usermapper.selectByName(this.loginUser).getId());
+    matchinfo.setUser2(id);
+    matchinfo.setUser1Hand(janken.getPlayer1());
+    matchinfo.setActive(true);
+    matchinfomapper.insertMatchinfo(matchinfo);
 
     model.addAttribute("loginUser", this.loginUser);
-    model.addAttribute("user", usermapper.selectbyId(id));
-    model.addAttribute("Player1", janken.getPlayer1());
-    model.addAttribute("Player2", janken.getPlayer2());
-    model.addAttribute("Result", janken.getResult());
-    return "match.html";
+    // model.addAttribute("user", usermapper.selectbyId(id));
+    // model.addAttribute("Player1", janken.getPlayer1());
+    // model.addAttribute("Player2", janken.getPlayer2());
+    // model.addAttribute("Result", janken.getResult());
+    return "wait.html";
   }
 
 }
